@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Records — MTA NOL Tracker</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <span class="bullet">M</span>
+    <span class="brand-text">
+      <span class="brand-title">NOL Tracker</span>
+      <span class="brand-sub">MABSTOA · East New York Depot</span>
+    </span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Dashboard</a>
+    <a href="new-nol.html">Add NOL</a>
+    <a href="records.html">Records</a>
+  </div>
+</nav>
+
+<header class="head">
+  <div class="head-row">
+    <div>
+      <h1>NOL Records</h1>
+      <p>Search, filter, and export the full Notice of Liability log</p>
+    </div>
+    <div style="display:flex; gap:11px">
+      <a href="/api/records/export.xlsx" class="btn btn-ghost">⬇ Download Excel</a>
+      <a href="new-nol.html" class="btn btn-primary">+ Add New NOL</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="alerts" id="alerts"></div>
+  <section class="card reveal reveal-1">
+    <div class="toolbar">
+      <div class="search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="q" placeholder="Search NOL number, plate, location, violation…" />
+      </div>
+      <select id="f-status">
+        <option value="">All statuses</option><option>OPEN</option><option>CLOSED</option>
+      </select>
+      <select id="f-violation">
+        <option value="">All violations</option>
+        <option>ACE</option><option>Bus Lane</option><option>Courtesy</option><option>Parking</option>
+        <option>Red Light</option><option>School Bus Safety</option><option>Speeding</option>
+        <option>Weigh in Motion</option><option>Work Zone Safety</option>
+      </select>
+    </div>
+    <div class="count">Showing <strong id="count">0</strong> records</div>
+    <div class="t-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>NOL Number</th><th>NOL Date</th><th>Received</th><th>Violation</th>
+            <th>Vehicle</th><th>Plate</th><th>Location</th><th>Fine</th>
+            <th>Due</th><th>Case Status</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="rows"><tr><td class="empty" colspan="11">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<!-- Detail modal -->
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="modal-head">
+      <div>
+        <div class="k">Notice of Liability</div>
+        <div class="v" id="m-nol"></div>
+      </div>
+      <button class="x" id="m-close">✕</button>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+    <div class="modal-foot">
+      <button class="btn btn-danger" id="m-delete">Delete</button>
+      <span style="flex:1"></span>
+      <button class="btn btn-ghost" id="m-close2">Close</button>
+      <button class="btn btn-primary" id="m-save">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<footer class="foot">
+  <strong>MTA NOL Tracker</strong> — MABSTOA, East New York Depot · Metropolitan Transportation Authority
+</footer>
+
+<script src="assets/js/api.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/fields.js"></script>
+<script src="assets/js/records.js"></script>
+</body>
+</html>

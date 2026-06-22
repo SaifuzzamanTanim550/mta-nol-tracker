@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add NOL — MTA NOL Tracker</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <span class="bullet">M</span>
+    <span class="brand-text">
+      <span class="brand-title">NOL Tracker</span>
+      <span class="brand-sub">MABSTOA · East New York Depot</span>
+    </span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Dashboard</a>
+    <a href="new-nol.html">Add NOL</a>
+    <a href="records.html">Records</a>
+  </div>
+</nav>
+
+<header class="head">
+  <div class="head-row">
+    <div>
+      <h1>Add Notice of Liability</h1>
+      <p>Upload the NOL PDF — the details fill in automatically for you to review</p>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="alerts" id="alerts"></div>
+
+  <div class="keywarn" id="keywarn">
+    AI extraction is off because no Gemini key is set. You can still enter records by hand.
+    To enable AI, add <code>GEMINI_API_KEY</code> to your <code>.env</code> file and restart the server.
+  </div>
+
+  <form id="form">
+    <div class="card reveal reveal-1">
+
+      <div class="section-label">NOL Document</div>
+      <div class="drop" id="drop">
+        <div class="ic">PDF</div>
+        <h3>Upload NOL PDF</h3>
+        <p>Click to browse or drag the notice here — AI reads it for you</p>
+        <button type="button" class="btn btn-ghost">Browse file</button>
+        <input type="file" id="file" accept="application/pdf" hidden />
+      </div>
+      <div class="filebar" id="filebar">
+        <span id="filebar-text"></span>
+        <span class="x" id="filebar-x" title="Remove">✕</span>
+      </div>
+
+      <!-- All record fields are rendered here from the shared schema -->
+      <div id="record-fields"></div>
+
+      <div class="section-label">Memo Package</div>
+      <p class="section-note">
+        Generates the MTA memo from the fields above and attaches the uploaded NOL PDF behind it,
+        named automatically. Fields below are pre-filled — edit any before generating.
+      </p>
+      <div class="grid">
+        <div class="field"><label>Notice Round</label>
+          <select id="m-round"><option>1ST</option><option>2ND</option><option>3RD</option></select></div>
+        <div class="field"><label>Memo Date</label><input type="date" id="m-date" /></div>
+        <div class="field"><label>Submit By</label><input type="date" id="m-submit" /></div>
+        <div class="field span-2"><label>To (Recipient)</label><input id="m-to" placeholder="AGM, Division" /></div>
+        <div class="field"><label>Depot Code</label><input id="m-depot" placeholder="e.g. FLT" /></div>
+        <div class="field span-2"><label>From (Sender)</label><input id="m-from" /></div>
+        <div class="field"><label>Vehicle Type</label><input id="m-vtype" placeholder="BUS" /></div>
+        <div class="field span-2"><label>Re (Subject)</label><input id="m-re" /></div>
+      </div>
+      <div class="grid grid-1" style="padding-top:0">
+        <button type="button" class="btn btn-ghost btn-sm" id="m-autofill" style="align-self:flex-start">Auto-fill memo fields from form</button>
+      </div>
+
+      <div class="actions-bar">
+        <a href="index.html" class="btn btn-ghost">Cancel</a>
+        <button type="button" class="btn btn-ghost" id="genmemo">Generate Memo Package</button>
+        <button type="submit" class="btn btn-primary" id="save">Save NOL Record</button>
+      </div>
+
+    </div>
+  </form>
+</main>
+
+<footer class="foot">
+  <strong>MTA NOL Tracker</strong> — MABSTOA, East New York Depot · Metropolitan Transportation Authority
+</footer>
+
+<script src="assets/js/api.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/fields.js"></script>
+<script src="assets/js/new-nol.js"></script>
+</body>
+</html>

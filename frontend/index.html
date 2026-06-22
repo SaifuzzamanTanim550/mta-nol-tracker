@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MTA NOL Tracker</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<nav class="nav">
+  <a class="brand" href="index.html">
+    <span class="bullet">M</span>
+    <span class="brand-text">
+      <span class="brand-title">NOL Tracker</span>
+      <span class="brand-sub">MABSTOA · East New York Depot</span>
+    </span>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Dashboard</a>
+    <a href="new-nol.html">Add NOL</a>
+    <a href="records.html">Records</a>
+  </div>
+</nav>
+
+<header class="head">
+  <div class="head-row">
+    <div>
+      <h1>Notice of Liability Tracking</h1>
+      <p>Metropolitan Transportation Authority Bus Company</p>
+    </div>
+    <a href="new-nol.html" class="btn btn-primary">+ Add New NOL</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="stats">
+    <div class="stat s-navy reveal reveal-1">
+      <div class="stat-k">Total NOLs</div>
+      <div class="stat-v" id="s-total">0</div>
+      <div class="stat-s">All records on file</div>
+    </div>
+    <div class="stat s-orange reveal reveal-2">
+      <div class="stat-k">Open</div>
+      <div class="stat-v" id="s-open">0</div>
+      <div class="stat-s">Require action</div>
+    </div>
+    <div class="stat s-gray reveal reveal-3">
+      <div class="stat-k">Pending</div>
+      <div class="stat-v" id="s-pending">0</div>
+      <div class="stat-s">Awaiting driver info</div>
+    </div>
+    <div class="stat s-green reveal reveal-4">
+      <div class="stat-k">Dismissed</div>
+      <div class="stat-v" id="s-dismissed">0</div>
+      <div class="stat-s">Resolved</div>
+    </div>
+  </section>
+
+  <section class="actions">
+    <a href="new-nol.html" class="action reveal reveal-2">
+      <span class="action-ic navy">📋</span>
+      <span>
+        <h3>Add New NOL</h3>
+        <p>Upload a notice PDF and let AI fill in the details</p>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    <a href="records.html" class="action reveal reveal-3">
+      <span class="action-ic orange">🔍</span>
+      <span>
+        <h3>View All Records</h3>
+        <p>Search, filter, and export the full NOL log</p>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+  </section>
+
+  <section class="card reveal reveal-4">
+    <div class="card-head">
+      <h2>Recent NOLs</h2>
+      <a href="records.html" class="btn btn-ghost btn-sm">View all</a>
+    </div>
+    <div class="t-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>NOL Number</th><th>Issue Date</th><th>Violation</th>
+            <th>Vehicle</th><th>Location</th><th>Fine</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="recent">
+          <tr><td class="empty" colspan="7">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <strong>MTA NOL Tracker</strong> — MABSTOA, East New York Depot · Metropolitan Transportation Authority
+</footer>
+
+<script src="assets/js/api.js"></script>
+<script src="assets/js/app.js"></script>
+<script>
+  (async () => {
+    try {
+      const s = await API.stats();
+      document.getElementById("s-total").textContent = s.total;
+      document.getElementById("s-open").textContent = s.open;
+      document.getElementById("s-pending").textContent = s.pending;
+      document.getElementById("s-dismissed").textContent = s.dismissed;
+
+      const records = (await API.listRecords()).slice(-6).reverse();
+      const tb = document.getElementById("recent");
+      if (!records.length) {
+        tb.innerHTML = `<tr><td class="empty" colspan="7">No records yet. <a href="new-nol.html">Add your first NOL →</a></td></tr>`;
+        return;
+      }
+      tb.innerHTML = records.map(r => `
+        <tr onclick="location.href='records.html'">
+          <td class="nol">${escapeHtml(r.NOL_Number) || "—"}</td>
+          <td>${fmtDate(r.Issue_Date)}</td>
+          <td>${escapeHtml(r.Type_of_Violation) || "—"}</td>
+          <td>${escapeHtml(r.Vehicle_Number) || "—"}</td>
+          <td>${escapeHtml((r.Violation_Location || "").slice(0, 28)) || "—"}</td>
+          <td>${r.Fine_Amount ? "$" + escapeHtml(r.Fine_Amount) : "—"}</td>
+          <td>${statusBadge(r.Status)}</td>
+        </tr>`).join("");
+    } catch (e) {
+      document.getElementById("recent").innerHTML =
+        `<tr><td class="empty" colspan="7">Could not reach the server.</td></tr>`;
+    }
+  })();
+</script>
+</body>
+</html>
