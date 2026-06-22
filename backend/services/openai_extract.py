@@ -42,11 +42,20 @@ for that key. Do not invent values.
 Keys to return:
 - NOL_Number: the "Notice #" number
 - Issue_Date: the issue date, formatted YYYY-MM-DD
-- Type_of_Violation: choose the closest match from this list ONLY:
+- Type_of_Violation: First look at the small program code printed in the colored
+  box in the TOP-RIGHT corner of the notice (for example "BLC" or "ACE"). Map that
+  code to the violation type using this table:
+    BLC -> "Bus Lane"
+    ACE -> "ACE"
+    RLC -> "Red Light"
+    SZC -> "Speeding"   (school zone speed camera)
+    SBS -> "School Bus Safety"
+    WZC -> "Work Zone Safety"
+    WIM -> "Weigh in Motion"
+  If the code is not present or not in the table, fall back to the body text and
+  choose the closest match. The value returned must be EXACTLY one of:
   ["ACE", "Bus Lane", "Courtesy", "Parking", "Red Light", "School Bus Safety",
    "Speeding", "Weigh in Motion", "Work Zone Safety"].
-  School-zone speed camera notices are "Speeding". Bus-lane / automated camera
-  enforcement notices are "ACE".
 - Enforcement_Agency: choose the closest match from this list ONLY:
   ["NYCDOT", "YPVB", "NCTPVA", "NYSDOT", "COY", "TOH"]. NYC DOF / DOT camera
   programs are "NYCDOT".
