@@ -1,7 +1,7 @@
 """PDF extraction endpoint."""
 from fastapi import APIRouter, UploadFile, File, HTTPException
 
-from ..services import gemini
+from ..services import openai_extract as extractor
 
 router = APIRouter(prefix="/api", tags=["extract"])
 
@@ -18,7 +18,7 @@ async def extract(file: UploadFile = File(...)):
         raise HTTPException(status_code=400, detail="The uploaded file is empty.")
 
     try:
-        fields = gemini.extract_fields_from_pdf(pdf_bytes)
+        fields = extractor.extract_fields_from_pdf(pdf_bytes)
     except RuntimeError as e:
         raise HTTPException(status_code=502, detail=str(e))
 
