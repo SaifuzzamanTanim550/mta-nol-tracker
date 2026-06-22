@@ -27,7 +27,7 @@
   <div class="head-row">
     <div>
       <h1>Add Notice of Liability</h1>
-      <p>Upload the NOL PDF — the details fill in automatically for you to review</p>
+      <p>Upload the NOL PDF, then review and complete the record below</p>
     </div>
   </div>
 </header>
@@ -36,8 +36,8 @@
   <div class="alerts" id="alerts"></div>
 
   <div class="keywarn" id="keywarn">
-    AI extraction is off because no Gemini key is set. You can still enter records by hand.
-    To enable AI, add <code>GEMINI_API_KEY</code> to your <code>.env</code> file and restart the server.
+    Automatic field extraction is unavailable because no API key is configured. You can still enter records by hand.
+    Set <code>OPENAI_API_KEY</code> in your environment and restart the server to enable it.
   </div>
 
   <form id="form">
@@ -47,7 +47,7 @@
       <div class="drop" id="drop">
         <div class="ic">PDF</div>
         <h3>Upload NOL PDF</h3>
-        <p>Click to browse or drag the notice here — AI reads it for you</p>
+        <p>Click to browse or drag the NOL here</p>
         <button type="button" class="btn btn-ghost">Browse file</button>
         <input type="file" id="file" accept="application/pdf" hidden />
       </div>
@@ -61,8 +61,8 @@
 
       <div class="section-label">Memo Package</div>
       <p class="section-note">
-        Generates the MTA memo from the fields above and attaches the uploaded NOL PDF behind it,
-        named automatically. Fields below are pre-filled — edit any before generating.
+        Generate the memorandum from the record above with the original NOL attached.
+        Review the fields below before generating.
       </p>
       <div class="grid">
         <div class="field"><label>Notice Round</label>
@@ -76,7 +76,7 @@
         <div class="field span-2"><label>Re (Subject)</label><input id="m-re" /></div>
       </div>
       <div class="grid grid-1" style="padding-top:0">
-        <button type="button" class="btn btn-ghost btn-sm" id="m-autofill" style="align-self:flex-start">Auto-fill memo fields from form</button>
+        <button type="button" class="btn btn-ghost btn-sm" id="m-autofill" style="align-self:flex-start">Populate memo fields from record</button>
       </div>
 
       <div class="actions-bar">

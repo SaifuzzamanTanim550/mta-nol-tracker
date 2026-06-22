@@ -16,7 +16,7 @@ function statusBadge(status) {
 function showAlert(containerId, message, type = "ok") {
   const el = document.getElementById(containerId);
   if (!el) return;
-  el.innerHTML = `<div class="alert alert-${type}">${type === "ok" ? "✓" : "⚠"} ${message}</div>`;
+  el.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
   if (type === "ok") setTimeout(() => (el.innerHTML = ""), 4000);
 }
 
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // If the Gemini key isn't set on the backend, surface a gentle banner.
   const banner = document.getElementById("keywarn");
   if (banner) {
-    API.health().then(h => { if (!h.gemini_key_set) banner.classList.add("show"); })
+    API.health().then(h => { if (!h.ai_ready) banner.classList.add("show"); })
        .catch(() => {});
   }
 });

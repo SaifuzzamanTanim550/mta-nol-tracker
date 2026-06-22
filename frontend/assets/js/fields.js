@@ -35,7 +35,6 @@ const CASE_STATUSES = [
 const NOL_SCHEMA = [
   {
     group: "NOL Details",
-    note: "These come from the scanned NOL. Review and correct anything.",
     fields: [
       { key: "NOL_Number", label: "NOL Number (Notice #)", type: "text", required: true, placeholder: "From the scanned NOL" },
       { key: "Issue_Date", label: "NOL Date (Issue Date)", type: "date" },

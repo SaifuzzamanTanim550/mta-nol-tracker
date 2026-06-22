@@ -57,7 +57,7 @@ async function handleFile(file) {
     const fields = await API.extract(file);
     Object.entries(fields).forEach(([k, v]) => setField(k, v));
     filebarText.innerHTML = `Extracted from <strong>${escapeHtml(file.name)}</strong> — please review below`;
-    showAlert("alerts", "Details extracted. Review and edit anything before saving.", "ok");
+    showAlert("alerts", "Fields populated from the document. Review before saving.", "ok");
     autofillMemo();
   } catch (e) {
     filebarText.innerHTML = `<strong>${escapeHtml(file.name)}</strong> attached — AI extraction unavailable, enter fields manually`;
