@@ -83,8 +83,6 @@ The Gemini API key is **never** committed or shipped to the browser. It's read f
 the environment (`.env` locally, the host's environment variables in production), and
 `.env` is gitignored. The browser only ever talks to this app's own backend.
 
-> ⚠️ If a key is ever pasted into a file or chat, rotate it: AI Studio → API Keys →
-> delete it and create a new one.
 
 ---
 
